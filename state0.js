@@ -8,7 +8,7 @@ demo.state0 = function(){};
 demo.state0.prototype = {
     preload: function(){
         // load images
-        game.load.image('adam', 'assets/sprites/adam.png');
+        game.load.image('adam', 'assets/spritesheets/adamSpritesheet.png', 240, 370);
         game.load.image('street', 'assets/backgrounds/street.jpg');
     },
     create: function(){
@@ -36,6 +36,7 @@ demo.state0.prototype = {
         adam.scale.setTo(0.5, 0.5);
         game.physics.enable(adam);
         adam.body.collideWorldBounds = true;
+        adam.animations.add('walk', [0, 1, 2]);
 
 
         // set camera follow adam
@@ -47,9 +48,14 @@ demo.state0.prototype = {
         if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
             adam.scale.setTo(0.5, 0.5);
             adam.x += speed;
+            adam.animations.play('walk', 14, true);
         } else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
             adam.scale.setTo(-0.5, 0.5);
             adam.x -= speed;
+            adam.animations.play('walk', 14, true);
+        } else {
+            adam.animations.stop('walk');
+            adam.frame = 0;
         }
 
         if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
